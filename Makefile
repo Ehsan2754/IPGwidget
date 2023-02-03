@@ -7,7 +7,7 @@ TARGET := IPGwidgetApp
 CXX = g++
 GDB = gdb
 # define any compile-time flags
-CXXFLAGS	:= -std=c++11 -Wall -Wextra -lpthread 
+CXXFLAGS	:= -std=c++11 -O2 -Wall -Wextra -lpthread
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -62,8 +62,8 @@ SOURCES		:= $(wildcard $(patsubst %,%/*.cpp, $(SOURCEDIRS)))
 OBJECTS		:= $(SOURCES:.cpp=.o)
 
 # Test source and object files
-TEST_SOURCES = $(wildcard $(patsubst %,%/*.cpp, $(TESTSDIR)))
-TEST_OBJECTS = $(TEST_SOURCES:.cpp=.o)
+TEST_SOURCES = $(wildcard $(patsubst %,%/*.cc, $(TESTSDIR)))
+TEST_OBJECTS = $(TEST_SOURCES:.cc=.o)
 
 # Lib source and object files
 LIB_SOURCES = $(wildcard $(patsubst %,%/*.cpp, $(LIBDIRS)))
@@ -74,6 +74,8 @@ LIB_OBJECTS = $(LIB_SOURCES:.cpp=.o)
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
 # (see the gnu make manual section about automatic variables)
 .cpp.o:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
+.cc.o:
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
 
 
@@ -95,9 +97,9 @@ debug: CXXFLAGS += -g
 debug: $(OUTPUT) $(MAIN); $(GDB) $(OUTPUTMAIN)
 
 # Test target
-test: CXXFLAGS +=  -lgtest -lgtest_main
+test: CXXFLAGS += -lgtest_main -lgtest
 test: $(LIB_OBJECTS) $(TEST_OBJECTS)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -o unitTests $(LIB_OBJECTS) $(TEST_OBJECTS) $(LFLAGS) $(LIBS)
+	$(CXX) $(CXXFLAGS)  $(INCLUDES) -o unitTests $(LIB_OBJECTS) $(TEST_OBJECTS) $(LFLAGS) $(LIBS)
 	./unitTests #--gtest_filter=logging*
 	@rm -f unitTests
 

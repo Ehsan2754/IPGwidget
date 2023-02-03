@@ -1,4 +1,4 @@
-# IPGwidget ![build](https://github.com/Ehsan2754/IPGwidget/actions/workflows/build.yml/badge.svg)  [![docs](https://github.com/Ehsan2754/IPGwidget/actions/workflows/docs.yml/badge.svg)](https://ehsan2754.github.io/IPGwidget)
+# IPGwidget ![build](https://github.com/Ehsan2754/IPGwidget/actions/workflows/build.yml/badge.svg)   ![unittest](https://github.com/Ehsan2754/ShinyAllocator/actions/workflows/unittest.yml/badge.svg) [![docs](https://github.com/Ehsan2754/IPGwidget/actions/workflows/docs.yml/badge.svg)](https://ehsan2754.github.io/IPGwidget) 
 
 A QtWidget based on Qt5 of ordered by IPG photonics. 
 
