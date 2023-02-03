@@ -2,7 +2,7 @@
 # 'make'        build executable file 'main'
 # 'make clean'  removes all .o and executable files
 #
-
+TARGET := IPGwidgetApp
 # define the Cpp compiler to use
 CXX = g++
 
@@ -27,7 +27,7 @@ INCLUDE	:= include
 LIB		:= lib
 
 ifeq ($(OS),Windows_NT)
-MAIN	:= main.exe
+MAIN	:= $(TARGET).exe
 SOURCEDIRS	:= $(SRC)
 INCLUDEDIRS	:= $(INCLUDE)
 LIBDIRS		:= $(LIB)
@@ -35,7 +35,7 @@ FIXPATH = $(subst /,\,$1)
 RM			:= del /q /f
 MD	:= mkdir
 else
-MAIN	:= main
+MAIN	:= $(TARGET)
 SOURCEDIRS	:= $(shell find $(SRC) -type d)
 INCLUDEDIRS	:= $(shell find $(INCLUDE) -type d)
 LIBDIRS		:= $(shell find $(LIB) -type d)
@@ -85,6 +85,14 @@ clean:
 	$(RM) $(OUTPUTMAIN)
 	$(RM) $(call FIXPATH,$(OBJECTS))
 	@echo Cleanup complete!
+
+
+# Force target
+.PHONY: FORCE
+# Documentation target
+docs: FORCE
+	doxygen Doxyfile
+
 
 run: all
 	./$(OUTPUTMAIN)

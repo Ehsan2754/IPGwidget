@@ -1,0 +1,26 @@
+# Project information
+PROJECT_NAME           = "IPGwidget"
+PROJECT_NUMBER         = 0.1
+PROJECT_BRIEF          = "A QtWidget based on Qt5 of ordered by IPG photonics."
+
+# Input and output directories
+INPUT                  = src include lib
+OUTPUT_DIRECTORY       = docs
+
+# Documentation format and style
+GENERATE_HTML          = YES
+HTML_OUTPUT            = .
+# HTML_STYLESHEET        = doxygen.css
+# HTML_EXTRA_STYLESHEET  = mystyle.css
+GENERATE_LATEX         = NO
+# LATEX_OUTPUT           = latex
+# LATEX_CMD_NAME         = pdflatex
+
+# Other options
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+#EXAMPLE_RECURSIVE      = YES
+#EXAMPLE_PATTERNS       = *
+#EXAMPLE_PATH           = examples
+RECURSIVE              = YES
