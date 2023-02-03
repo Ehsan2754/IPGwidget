@@ -24,7 +24,7 @@ jobs:
       uses: jurplel/install-qt-action@v3.0.0
 
     - name: Build
-      run: make all
+      run: make all | chmod +x ./output/IPGwidgetApp
 
     - name: Create Release
       id: create_release
