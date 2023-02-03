@@ -12,24 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v3
-#    - name: Configure
-#      run: |
-#        sudo apt-get update 
-#        sudo apt-get upgrade
-#    - name: Install Qt
-#      uses: jurplel/install-qt-action@v3.0.0
+
+    - name: Configure
+      run: |
+        sudo apt-get update 
+        sudo apt-get upgrade
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3.0.0
 
     - name: Build
       run: make all
-      
-    # - name: Upload a Build Artifact
-    #   uses: actions/upload-artifact@v3.1.1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #   with:
-    #     name: IPGwidgetApp
-    #     path: ./output/IPGwidgetApp
 
     - name: Create Release
       id: create_release
@@ -41,6 +36,10 @@ jobs:
         release_name: IPGwidgetApp.0.1-${{ github.run_number }}
         draft: false
         prerelease: false
+        body: |
+          Target platform: "$(uname -s)"
+          Target architecture: "$(uname -m)"
+          Dependencies: $(ldd ./output/IPGwidgetApp | awk '{print $3}')
 
     - name: Upload Executable
       id: upload-executable 
