@@ -1,6 +1,8 @@
 # IPGwidget ![build](https://github.com/Ehsan2754/IPGwidget/actions/workflows/build.yml/badge.svg)   ![unittest](https://github.com/Ehsan2754/ShinyAllocator/actions/workflows/unittest.yml/badge.svg) [![docs](https://github.com/Ehsan2754/IPGwidget/actions/workflows/docs.yml/badge.svg)](https://ehsan2754.github.io/IPGwidget) 
 
 A QtWidget based on Qt5 of ordered by IPG photonics. 
+# Demo and Memory Profiling 
+[![Demo](https://img.youtube.com/vi/E-RvJ02C3ww/0.jpg)](https://youtu.be/E-RvJ02C3ww)
 
 # Download and Run
 ```
@@ -20,4 +22,5 @@ A QtWidget based on Qt5 of ordered by IPG photonics.
 8. Source code is placed in a local git repository and submitted as an archive in response to the assignment.
 
 # Environment Setup
+* Install profiling, testing, documenting and building packages:
 * build and install Qt5 from [sources](https://wiki.qt.io/Building_Qt_5_from_Git#Getting_the_source_code).

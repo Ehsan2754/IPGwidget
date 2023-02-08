@@ -17,10 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    IPGwidget.cpp
+    IPGwidget.cpp \
+    ../lib/IPGStreamThread.cpp
 
 HEADERS += \
-    IPGwidget.h
+    IPGwidget.h \
+    ../lib/IPGStreamThread.hpp
+    ../lib/IPGwidgetAppConfig.hpp
 
 FORMS += \
     IPGwidget.ui

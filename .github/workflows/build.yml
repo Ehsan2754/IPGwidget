@@ -24,7 +24,7 @@ jobs:
       uses: jurplel/install-qt-action@v3.0.0
 
     - name: Build
-      run: make all;chmod +x ./output/IPGwidgetApp;
+      run: make build;chmod +x ./output/IPGwidgetApp;
 
     - name: Create Release
       id: create_release
@@ -39,6 +39,9 @@ jobs:
         body: |
           Target platform: ${{ runner.os }}
           Target architecture: ${{ runner.arch }}
+    - name : Build Qt binary/application
+      run: |
+        cd Qt; qmake -o Makefile Qt.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && make -j8; 
 
     - name: Upload Executable
       id: upload-executable 
@@ -47,6 +50,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./output/IPGwidgetApp
+        asset_path: ./Qt/Qt
         asset_name: IPGwidgetApp
         asset_content_type: binary/application

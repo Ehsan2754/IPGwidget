@@ -4,7 +4,7 @@ PROJECT_NUMBER         = 0.1
 PROJECT_BRIEF          = "A QtWidget based on Qt5 of ordered by IPG photonics."
 
 # Input and output directories
-INPUT                  = src include lib tests
+INPUT                  = src include lib tests Qt
 OUTPUT_DIRECTORY       = docs
 
 # Documentation format and style

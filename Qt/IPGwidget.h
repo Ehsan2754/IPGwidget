@@ -2,6 +2,7 @@
 #define IPGWIDGET_H
 
 #include <QWidget>
+#include "../lib/IPGStreamThread.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class IPGwidget; }
@@ -20,5 +21,6 @@ private slots:
 
 private:
     Ui::IPGwidget *ui;
+    IPGStreamThread *stream_thread;
 };
 #endif // IPGWIDGET_H

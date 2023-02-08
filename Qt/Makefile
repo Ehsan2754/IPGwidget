@@ -53,9 +53,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		IPGwidget.cpp moc_IPGwidget.cpp
+		IPGwidget.cpp \
+		../lib/IPGStreamThread.cpp moc_IPGwidget.cpp
 OBJECTS       = main.o \
 		IPGwidget.o \
+		IPGStreamThread.o \
 		moc_IPGwidget.o
 DIST          = ../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/common/unix.conf \
@@ -253,8 +255,10 @@ DIST          = ../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/lex.prf \
-		Qt.pro IPGwidget.h main.cpp \
-		IPGwidget.cpp
+		Qt.pro IPGwidget.h \
+		../lib/IPGStreamThread.hpp main.cpp \
+		IPGwidget.cpp \
+		../lib/IPGStreamThread.cpp
 QMAKE_TARGET  = Qt
 DESTDIR       = 
 TARGET        = Qt
@@ -676,8 +680,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.13.2/5.13.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents IPGwidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp IPGwidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents IPGwidget.h ../lib/IPGStreamThread.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp IPGwidget.cpp ../lib/IPGStreamThread.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents IPGwidget.ui $(DISTDIR)/
 
 
@@ -817,6 +821,12 @@ moc_IPGwidget.cpp: IPGwidget.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qtouchdevice.h \
+		../lib/IPGStreamThread.hpp \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QThread \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qthread.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QWaitCondition \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qwaitcondition.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QMutex \
 		moc_predefs.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/bin/moc
 	/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/bin/moc $(DEFINES) --include /home/ahuratus/Projects/IPGwidget/Qt/moc_predefs.h -I/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/mkspecs/linux-g++ -I/home/ahuratus/Projects/IPGwidget/Qt -I/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/include -I/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/include/QtWidgets -I/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/include/QtGui -I/home/ahuratus/Qt5.13.2/5.13.2/gcc_64/include/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include IPGwidget.h -o moc_IPGwidget.cpp
@@ -946,6 +956,12 @@ main.o: main.cpp IPGwidget.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qtouchdevice.h \
+		../lib/IPGStreamThread.hpp \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QThread \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qthread.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QWaitCondition \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qwaitcondition.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QMutex \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtWidgets/qapplication.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1059,8 +1075,73 @@ IPGwidget.o: IPGwidget.cpp IPGwidget.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.13.2/5.13.2/gcc_64/include/QtGui/qtouchdevice.h \
+		../lib/IPGStreamThread.hpp \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QThread \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qthread.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QWaitCondition \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qwaitcondition.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QMutex \
 		ui_IPGwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o IPGwidget.o IPGwidget.cpp
+
+IPGStreamThread.o: ../lib/IPGStreamThread.cpp ../lib/IPGStreamThread.hpp \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QThread \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qthread.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QWaitCondition \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/qwaitcondition.h \
+		../../../Qt5.13.2/5.13.2/gcc_64/include/QtCore/QMutex
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o IPGStreamThread.o ../lib/IPGStreamThread.cpp
 
 moc_IPGwidget.o: moc_IPGwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_IPGwidget.o moc_IPGwidget.cpp

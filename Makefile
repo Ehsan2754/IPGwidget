@@ -33,7 +33,7 @@ OUTPUT	:= output
 SRC		:= src
 
 # define include directory
-INCLUDE	:= include
+INCLUDE	:= lib
 
 # define lib directory
 LIB		:= lib
@@ -118,6 +118,10 @@ test: $(LIB_OBJECTS) $(TEST_OBJECTS)
 	$(CXX) $(CXXFLAGS)  $(INCLUDES) -o unitTests $(LIB_OBJECTS) $(TEST_OBJECTS) $(LFLAGS) $(LIBS)
 	./unitTests #--gtest_filter=logging*
 	@rm -f unitTests
+
+valgrind: Qt
+	@valgrind --tool=callgrind --callgrind-out-file=IPGwidgetAppProfile.valgrind ./Qt/Qt 
+	kcachegrind IPGwidgetAppProfile.valgrind&
 
 .PHONY: clean
 clean:
