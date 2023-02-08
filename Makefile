@@ -7,12 +7,24 @@ TARGET := IPGwidgetApp
 CXX = g++
 GDB = gdb
 # define any compile-time flags
-CXXFLAGS	:= -std=c++11 -O2 -Wall -Wextra -lpthread
+CXXFLAGS	:= -std=c++11 -O2 -Wall -Wextra -lpthread 
+
+# Add the following line to your makefile to specify the location of the library
+QT_TARGET = Qt.pro
+QT_DIR = ~/Qt5.13.2/5.13.2/gcc_64
+QT_LIB_DIR = $(QT_DIR)/lib
+QT_INC_DIR = $(QT_DIR)/include
+QMAKE = $(QT_DIR)/bin/qmake
+# QT_INCS = I$(QT_INC_DIR) I$(QT_INC_DIR)/QtCore I$(QT_INC_DIR)/QtWidgets I$(QT_INC_DIR)/QtGui
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS =
+
+# Add the library to the linker flags
+LDFLAGS =  
+LFLAGS = -L$(QT_LIB_DIR) 
+
 
 # define output directory
 OUTPUT	:= output
@@ -52,6 +64,7 @@ endif
 # define any directories containing header files other than /usr/include
 INCLUDES	:= $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
 
+
 # define the C libs
 LIBS		:= $(patsubst %,-L%, $(LIBDIRS:%/=%))
 
@@ -82,7 +95,7 @@ LIB_OBJECTS = $(LIB_SOURCES:.cpp=.o)
 OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
 
-all: $(OUTPUT) $(MAIN)
+build: $(OUTPUT) $(MAIN)
 	@echo Executing 'all' complete!
 
 $(OUTPUT):
@@ -91,6 +104,9 @@ $(OUTPUT):
 $(MAIN): $(LIB_OBJECTS)  $(OBJECTS) 
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(LIB_OBJECTS) $(OBJECTS) $(LFLAGS) $(LIBS)
 
+.PHONY: FORCE
+Qt: FORCE
+	cd Qt && rm -rf Makefile && $(QMAKE) -o Makefile $(QT_TARGET) -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug && make -j8;
 
 # Debug target
 debug: CXXFLAGS += -g
@@ -109,6 +125,7 @@ clean:
 	$(RM) $(call FIXPATH,$(LIB_OBJECTS))
 	$(RM) $(call FIXPATH,$(TEST_OBJECTS))
 	$(RM) $(call FIXPATH,$(OBJECTS))
+	cd Qt && make clean;
 
 
 	@echo Cleanup complete!
@@ -122,5 +139,7 @@ docs: FORCE
 
 
 run: all
-	./$(OUTPUTMAIN)
+	./$(OUTPUTMAIN) &
 	@echo Executing 'run: all' complete!
+
+all : build qt

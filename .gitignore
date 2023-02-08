@@ -33,3 +33,5 @@
 output
 .vscode
 docs
+build*
+*.stash
