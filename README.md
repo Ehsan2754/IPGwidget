@@ -13,7 +13,9 @@ A QtWidget based on Qt5 of ordered by IPG photonics.
 # Features / Acceptance Criteria
 1. Implemented using Qt version 5 library and QtWidgets for the graphical interface
 2. The appearance of the window must match the given figure
-    ![Sample](https://i.ibb.co/smCSV2P/Screenshot-from-2023-02-03-16-10-23.png)
+    | Figure                                                                      | Application                                |
+    | --------------------------------------------------------------------------- | ------------------------------------------ |
+    | ![Sample](https://i.ibb.co/smCSV2P/Screenshot-from-2023-02-03-16-10-23.png) | ![img](https://i.ibb.co/frbZ4nD/image.png) |
 3. The "SEND" button changes color to #619bd5 when pressed
 4. When "SEND" button is clicked, the message from the input field is sent to the second thread of the application and the input field is cleared
 5. The second thread writes all received messages to the text file "messages.txt" in UTF-8 encoding every 5 seconds
@@ -23,4 +25,12 @@ A QtWidget based on Qt5 of ordered by IPG photonics.
 
 # Environment Setup
 * Install profiling, testing, documenting and building packages:
+    ```
+        sudo apt-get update && sudo apt-get upgrade
+        sudo apt-get install make cmake doxygen graphviz valgrind kcachegrind  libgtest-dev
+        cd /usr/src/gtest
+        sudo cmake CMakeLists.txt
+        sudo make
+        sudo cp ./lib/*.a /usr/lib
+             ```
 * build and install Qt5 from [sources](https://wiki.qt.io/Building_Qt_5_from_Git#Getting_the_source_code).
